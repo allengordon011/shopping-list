@@ -3,8 +3,8 @@
 //user needs a text input box and a submit button
 //*set up event listener for user input - event listener
 //user wants to see their items in a list
-//*cross reference event listener user input with state - state modification functions
-//*each new item should be appended, *or pre-pended* - state modification functions
+//*push event listener user input into state - state modification functions
+//*each new item should be appended, *or prepended* - state modification functions
 //*output 'new' state - state rendering function
 
 //requirements: 
@@ -14,24 +14,37 @@
 // -permanently remove items from the list
 
 $(document).ready(function()){
+
 	//state object
 	var state = {
-		items: []
+		items: [
+			{ title: "apples",
+			checked: true },
+			{ title: "bananas",
+			checked: false }
+		]
 	}
+
 	//event listeners
 	$('.shopping-list-add-button').on('click', function(event){
 		event.preventDefault();
-		var userInput = (this.event);
+		//var userInput = (this.event);
+		addItem(??, ??);
+		updateList(??, $('.shopping-list'));
 	});
+
 	//state modification functions
 	var addItem = function (state, userInput) {
-		state.items.push(userInput);
+		//userInput is just text
+		var newObject = {title: userInput, checked: false}
+		state.items.push(newObject);
 	}
+
 	//state rendering functions
-	$('.shopping-list').prepend(new_item);
+	var updateList = function (state, element) {
+		$('.shopping-list').prepend('<div class="shopping-item">' + $(newObject[-1]) + '</div>');
+	}
 
-	('<div class="shopping item>' + userInput + '</div>')
-
-})
+	updateList(state, 'testItem');
 
 //nothing here
