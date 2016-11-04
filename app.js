@@ -13,17 +13,19 @@
 // -check and uncheck items on the list by clicking the "Check" button
 // -permanently remove items from the list
 
+/*
+1. user clicks check button - event listener
+2. event listener sends click data to state modifier
+3. state modifier changes value of property "items"
+4. state render function applies or removes strikethru
+*/
+
 $(document).ready(function(){
 
 	//state object
 	//an array of "item: userInput" objects with property "checked: true/false"
 	var state = {
-		items: [
-			{ title: "apples",
-			checked: true },
-			{ title: "bananas",
-			checked: false }
-		]
+		items: []
 		// console.log("state object " + state.items)
 	}
 
@@ -35,16 +37,16 @@ $(document).ready(function(){
 	- passes info to updateList
 	- >> form resets
 	*/
-	$('.shopping-list-add-button').on('click', function(event){
+	$('.shopping-list-add').submit(function(event){
 		event.preventDefault();
-		//
-		var userInput = ($('.shopping-list-add-input').val());
-
+		var userInput = $('.shopping-list-add-input').val();
 		addItem(state, userInput);
 		updateHtml(state, $('.shopping-list'));
+		// console.log("event listeners " + userInput);
 
-		console.log("event listeners " + userInput);
-
+	});
+	$('.check-button').on('click'(function(){
+		$().toggleclass($('.shopping-item__checked'), addOrRemove);
 	});
 
 	//state modification functions
@@ -56,7 +58,8 @@ $(document).ready(function(){
 	var addItem = function (state, userInput) {
 		var newObject = {
 			title: userInput,
-			checked: false }
+			checked: false 
+		}
 		state.items.push(newObject);
 
 		console.log("state modification " + newObject);
@@ -72,13 +75,16 @@ $(document).ready(function(){
 	//first parameter is the state, element to render into is the second
 	var updateHtml = function (state, element) {
 		// element = $('.shopping-list')
+		// 'checkButton' value= value of property
+
+		var checkButton = '<button class="check-button">Check</button>';
+
+		var deleteButton = '<button class="delete-button">Delete</button>';
 		var itemsHtml = state.items.map(function(item) {
-			return '<li>' + item + '</li>';
+			return '<li>' + item.title + checkButton + deleteButton + '</li>';
 		});
 		
 		element.html(itemsHtml);
-
-		console.log("state rendering functions " + itemsHtml);
 
 	};
 
