@@ -27,6 +27,12 @@ $(document).ready(function(){
 	var state = {
 		items: []
 		// console.log("state object " + state.items)
+
+		//
+		// items: [
+		//   { title: 'Apples', checked: false, id: '1' }
+		//   { title: 'Pears', checked: true, id: '2' }
+		//]
 	}
 
 	//event listeners
@@ -37,17 +43,25 @@ $(document).ready(function(){
 	- passes info to updateList
 	- >> form resets
 	*/
+
 	$('.shopping-list-add').submit(function(event){
 		event.preventDefault();
 		var userInput = $('.shopping-list-add-input').val();
+
 		addItem(state, userInput);
 		updateHtml(state, $('.shopping-list'));
+
 		// console.log("event listeners " + userInput);
 
 	});
-	$('.check-button').on('click'(function(){
-		$().toggleclass($('.shopping-item__checked'), addOrRemove);
-	}))
+
+	// State -> DOM -> User Action -> State -> DOM ...
+
+	$('.check-button').on('click', function() {
+
+		toggleStatus(state, itemId);
+		// $(event.target).closest('li').toggleclass($('.shopping-item__checked'), addOrRemove);
+	});
 
 	//state modification functions
 	/*
@@ -59,11 +73,17 @@ $(document).ready(function(){
 		var newObject = {
 			title: userInput,
 			checked: false 
+			// add item id
 		}
 		state.items.push(newObject);
 
 		console.log("state modification " + newObject);
+	}
 
+	/**************/
+	var toggleStatus = function (state, itemId) {
+		var item = state.items.findById(itemId)
+		item.checked = !item.checked
 	}
 
 	//state rendering functions
@@ -78,10 +98,13 @@ $(document).ready(function(){
 		// 'checkButton' value= value of property
 
 		var checkButton = '<button class="check-button">Check</button>';
-
 		var deleteButton = '<button class="delete-button">Delete</button>';
+
 		var itemsHtml = state.items.map(function(item) {
-			return '<li>' + item.title + checkButton + deleteButton + '</li>';
+			var liId = item.id;
+			var itemTitle = '<li id=">' + liID + '" ' + item.title + '</li>';
+			var itemTitleChecked = '<li id=item.id class="shopping-item__checked" id">' + liID + '" ' + item.title + '</li>';
+			return (itemTitle + checkButton + deleteButton); 
 		});
 		
 		element.html(itemsHtml);
