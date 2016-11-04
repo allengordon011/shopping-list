@@ -47,7 +47,7 @@ $(document).ready(function(){
 	});
 	$('.check-button').on('click'(function(){
 		$().toggleclass($('.shopping-item__checked'), addOrRemove);
-	});
+	}))
 
 	//state modification functions
 	/*
