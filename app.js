@@ -59,16 +59,27 @@ $(document).ready(function(){
 		var deleteButton = '<button class="delete-button">Delete</button>';
 
 		var itemsHtml = state.items.map(function(item) {
-			var eachItem = null,
-			itemID = item.id,
-			toDoItem = '<span>' + $(item.title).addClass('shopping-item') + '</span>',
-			completedItem = $(toDoItem).addClass('shopping-item__checked');
+
+			var itemID = item.id,
+			toDoItem = '<li class="shopping-item">' + item.title + '</li>';
+
+			// item.title;
+			
+			// $(toDoItem).addClass('shopping-item__checked');
+			// '<span>' + $(item.title).addClass('shopping-item') + '</span>',
 
 			// if (itemID === false) {
 			// 	var eachItem = '<li>' + toDoItem + '</li>'
 			// }
 
-			eachItem = '<li>' + completedItem + '</li>' + checkButton + deleteButton; 
+			// ('<li><span class="shopping-item">' + toDoItem + '\
+			//  </span><div class="shopping-item-controls">\
+			//  ' + checkButton + deleteButton + '\
+			//  </div></li>')
+
+			return (toDoItem + checkButton + deleteButton);
+
+			// ('<li>' + toDoItem + '</li>' + checkButton + deleteButton); 
 		});
 		
 		// Replace the entire HTML element
@@ -86,7 +97,8 @@ $(document).ready(function(){
 	});
 
 	$('.check-button').on('click', function() {
-		itemID = $('.check-button').parents('li');
+		$(this).parents('li');
+
 	});
 
 });
