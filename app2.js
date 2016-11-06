@@ -7,64 +7,75 @@ To do:
 - Add rendering for click events
 */
 
-//state
-var state = {
-	items: []
-}
+// STATE //
+var state = { items: [] }
 
-// manipulate
+// MANIPULATE //
 function addItem(state, userInput) {
 	state.items.push( { title: userInput, checked: false })
 }
-// iterate through state.items to assign ID to shopping list objects
+
 function assignId(arrayOfObjects) {
   arrayOfObjects.map(function (object, index) {
     object.itemID = (index + 1); 
   });
 }
 
-// render
+// RENDER //
 function updateDOM(state, element) {
 	$('.shopping-list').children().remove();	
-// iterate through state.items to get individual object attributes
-	function findObjectContents(arrayOfObjects) {
-		var checkButton = '<button class="check-button">Check</button>';
-		var deleteButton = '<button class="delete-button">Delete</button>';
 
+	function findObjectContents(arrayOfObjects) {
 		arrayOfObjects.forEach(function (object) {
 			var item = object,
-			itemID = item.itemID,
-			itemTitle = item.title,
-			listItem = '<span id="' + itemID + '">' + itemTitle + '</span>';
-			itemContent = listItem + checkButton + deleteButton
+				itemID = item.itemID,
+				itemTitle = item.title,
+				listItem = '<p id="' + itemID + '">' + itemTitle + '</p>',
+				checkButton = '<button class="check-button">Check</button>',
+				deleteButton = '<button class="delete-button">Delete</button>',
+				itemContent = listItem + checkButton + deleteButton;
 			
-			// HTML rendering
 			var renderedListItem =
-				('<li class="shopping-item" id="shopping-list-item"><div class="container">' + itemContent + '</div></li>');
+				('<li>' + itemContent + '</li>');
 			$(renderedListItem).prependTo('.shopping-list');
 		});
 	}
-
-
-
 assignId(state.items);
 findObjectContents(state.items);
 }
 
+function checkItem(findListItem) {
+	$(findListItem).toggleClass('shopping-item__checked');
+}
 
+function deleteItem(findListItem) {
+	$(findListItem).parent('li').remove();
+}
 
-// listen
-var newItemText = $('.shopping-list-add').submit(function(event) {
+// LISTEN //
+$('.shopping-list-add').submit(function(event) {
 	event.preventDefault();
 	var userInput = $('.shopping-list-add-input').val();
-
 	// pass out commands for next steps
 	addItem(state, userInput);
 	updateDOM(state, $('.shopping-list'));
+	$('.check-button').on('click', handleClick);
+	$('.delete-button').on('click', handleDelete);
 });
 
+function handleClick() {
+	var findListItem = $(event.currentTarget).prev();
+	// pass out commands for next steps
+	// if statement for check-button / delete-button?
+	checkItem(findListItem);
+}
 
-
+function handleDelete() {
+	var findListItem = $(event.currentTarget).prev();
+	// pass out commands for next steps
+	// if statement for check-button / delete-button?
+	deleteItem(findListItem);
+}
 
 
 
