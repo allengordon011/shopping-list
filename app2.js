@@ -1,18 +1,11 @@
 $(document).ready(function() {
 
-/*
-To do:
-- Add styling to all .shopping-items
-- Add click events for buttons
-- Add rendering for click events
-*/
-
 // STATE //
 var state = { items: [] }
 
 // MANIPULATE //
 function addItem(state, userInput) {
-	state.items.push( { title: userInput, checked: false })
+	state.items.push( { title: userInput })
 }
 
 function assignId(arrayOfObjects) {
@@ -27,10 +20,7 @@ function updateDOM(state, element) {
 
 	function findObjectContents(arrayOfObjects) {
 		arrayOfObjects.forEach(function (object) {
-			var item = object,
-				itemID = item.itemID,
-				itemTitle = item.title,
-				listItem = '<p id="' + itemID + '">' + itemTitle + '</p>',
+			var listItem = '<p id="' + object.itemID + '">' + object.title + '</p>',
 				checkButton = '<button class="check-button">Check</button>',
 				deleteButton = '<button class="delete-button">Delete</button>',
 				itemContent = listItem + checkButton + deleteButton;
@@ -61,6 +51,7 @@ $('.shopping-list-add').submit(function(event) {
 	updateDOM(state, $('.shopping-list'));
 	$('.check-button').on('click', handleClick);
 	$('.delete-button').on('click', handleDelete);
+	$('.shopping-list-add-input').val('');
 });
 
 function handleClick() {
@@ -76,29 +67,5 @@ function handleDelete() {
 	// if statement for check-button / delete-button?
 	deleteItem(findListItem);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 });
