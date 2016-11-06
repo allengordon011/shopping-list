@@ -1,5 +1,12 @@
 $(document).ready(function() {
 
+/*
+to-do:
+- styling
+- fix delete/re-add bug 
+- if ID property is not used to fix bug, remove
+*/
+
 // STATE //
 var state = { items: [] }
 
@@ -23,11 +30,9 @@ function updateDOM(state, element) {
 			var listItem = '<p id="' + object.itemID + '">' + object.title + '</p>',
 				checkButton = '<button class="check-button">Check</button>',
 				deleteButton = '<button class="delete-button">Delete</button>',
-				itemContent = listItem + checkButton + deleteButton;
-			
-			var renderedListItem =
-				('<li>' + itemContent + '</li>');
-			$(renderedListItem).prependTo('.shopping-list');
+				fullContent = ('<li>' + listItem + checkButton + deleteButton + '</li>');
+
+			$(fullContent).prependTo('.shopping-list');
 		});
 	}
 assignId(state.items);
@@ -56,15 +61,11 @@ $('.shopping-list-add').submit(function(event) {
 
 function handleClick() {
 	var findListItem = $(event.currentTarget).prev();
-	// pass out commands for next steps
-	// if statement for check-button / delete-button?
 	checkItem(findListItem);
 }
 
 function handleDelete() {
 	var findListItem = $(event.currentTarget).prev();
-	// pass out commands for next steps
-	// if statement for check-button / delete-button?
 	deleteItem(findListItem);
 }
 
