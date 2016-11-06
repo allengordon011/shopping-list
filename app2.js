@@ -1,50 +1,57 @@
 $(document).ready(function() {
 
+/*
+To do:
+- Add styling to all .shopping-items
+- Add click events for buttons
+- Add rendering for click events
+*/
+
 //state
 var state = {
 	items: []
 }
 
 // manipulate
-var addItem = function (state, userInput) {
+function addItem(state, userInput) {
 	state.items.push( { title: userInput, checked: false })
 }
-
 // iterate through state.items to assign ID to shopping list objects
-var assignId = function(arrayOfObjects) {
+function assignId(arrayOfObjects) {
   arrayOfObjects.map(function (object, index) {
     object.itemID = (index + 1); 
   });
-  var state = arrayOfObjects;
-  // return state;
 }
 
 // render
-var renderHtml = function (state, element) {
+function updateDOM(state, element) {
+	$('.shopping-list').children().remove();	
 // iterate through state.items to get individual object attributes
-	var findObjectContents = function(arrayOfObjects) {
+	function findObjectContents(arrayOfObjects) {
 		var checkButton = '<button class="check-button">Check</button>';
 		var deleteButton = '<button class="delete-button">Delete</button>';
 
-		arrayOfObjects.map(function (object) {
+		arrayOfObjects.forEach(function (object) {
 			var item = object,
 			itemID = item.itemID,
-			itemTitle = item.title;
+			itemTitle = item.title,
+			listItem = '<span id="' + itemID + '">' + itemTitle + '</span>';
+			itemContent = listItem + checkButton + deleteButton
 			
 			// HTML rendering
-			var renderedListItem = ('<li id="' + itemID + '">' + itemTitle + '</li> <br> \
-				' + checkButton + deleteButton );
-
+			var renderedListItem =
+				('<li class="shopping-item" id="shopping-list-item"><div class="container">' + itemContent + '</div></li>');
 			$(renderedListItem).prependTo('.shopping-list');
-
 		});
 	}
 
+
+
 assignId(state.items);
 findObjectContents(state.items);
-element.html(findObjectContents);
-
 }
+
+
 
 // listen
 var newItemText = $('.shopping-list-add').submit(function(event) {
@@ -53,7 +60,7 @@ var newItemText = $('.shopping-list-add').submit(function(event) {
 
 	// pass out commands for next steps
 	addItem(state, userInput);
-	renderHtml(state, $('.shopping-list'));
+	updateDOM(state, $('.shopping-list'));
 });
 
 
