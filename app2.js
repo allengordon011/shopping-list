@@ -19,6 +19,7 @@ function assignId(arrayOfObjects) {
   arrayOfObjects.map(function (object, index) {
     object.itemID = (index + 1); 
   });
+  state.items = arrayOfObjects;
 }
 
 // RENDER //
@@ -44,7 +45,17 @@ function checkItem(findListItem) {
 }
 
 function deleteItem(findListItem) {
+	var objID = findListItem.attr('id'),
+		aryofObjs = state.items;
+	// this removes the element temporarily
 	$(findListItem).parent('li').remove();
+	// this removes the element from object array permanently
+	// necessary b/c otherwise element will stay on page until next user action
+	for (var i = 0; i < aryofObjs.length; i++) {
+		if (aryofObjs[i].itemID == objID) {
+			aryofObjs.splice(i, 1);
+		}
+	}
 }
 
 // LISTEN //
@@ -66,7 +77,7 @@ function handleClick() {
 
 function handleDelete() {
 	var findListItem = $(event.currentTarget).prev();
-	deleteItem(findListItem);
+	deleteItem(findListItem.prev('p'));
 }
 
 });
