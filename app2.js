@@ -8,8 +8,7 @@ to-do:
 */
 
 // STATE //
-var state = { 
-	items: [] }
+var state = { items: [] }
 
 // MANIPULATE //
 function addItem(state, userInput) {
@@ -60,8 +59,8 @@ function deleteItem(findListItem) {
 }
 
 // LISTEN //
-$('.shopping-list-add').submit(function(e) {
-	e.preventDefault();
+$('.shopping-list-add').submit(function(event) {
+	event.preventDefault();
 	var userInput = $('.shopping-list-add-input').val();
 	// pass out commands for next steps
 	addItem(state, userInput);
@@ -78,7 +77,7 @@ function handleClick() {
 
 function handleDelete() {
 	var findListItem = $(event.currentTarget).prev();
-	deleteItem(findListItem.closest('p'));
+	deleteItem(findListItem.prev('p'));
 }
 
 });
